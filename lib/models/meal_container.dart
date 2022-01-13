@@ -9,6 +9,6 @@ class MealContainer {
     required this.id,
     required this.name,
     required this.scheduledTime,
-    required this.storage,
+    this.storage = const [],
   });
 }
