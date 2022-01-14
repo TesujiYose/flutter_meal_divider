@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meal_divider/data/data.dart';
-import 'package:flutter_meal_divider/models/meal_container.dart';
+
+import 'package:flutter_meal_divider/providers/meal_container.dart';
+import 'package:provider/provider.dart';
 
 class AddContainerScreen extends StatelessWidget {
   AddContainerScreen({Key? key}) : super(key: key);
-  TextEditingController _idController = TextEditingController();
+
   TextEditingController _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final containerData = Provider.of<MContainers>(context);
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -16,17 +18,14 @@ class AddContainerScreen extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
-              controller: _idController,
-              decoration: InputDecoration(hintText: 'Id'),
-            ),
-            TextFormField(
               controller: _nameController,
+              decoration: InputDecoration(hintText: 'Name'),
             ),
             TextButton(
               onPressed: () {
-                addContainer(
+                containerData.addContainer(
                   MealContainer(
-                    id: _idController.text,
+                    id: DateTime.now().toString(),
                     name: _nameController.text,
                     scheduledTime: DateTime.now(),
                     storage: [],
