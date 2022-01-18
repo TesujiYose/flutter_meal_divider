@@ -13,6 +13,8 @@ class ContainerViewScreen extends StatelessWidget {
     MealContainer _mealContainer = containerData.findById(_id);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: _mealContainer.color,
+        title: Text(_mealContainer.name),
         actions: [
           IconButton(
             onPressed: () {
@@ -27,27 +29,40 @@ class ContainerViewScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
+      body: ListView(
         children: [
-          Text(
-            'Time of creation is ${_mealContainer.scheduledTime.hour}:${_mealContainer.scheduledTime.minute}',
-          ),
-          Text(_mealContainer.name),
-          Container(
-            height: 300,
-            color: Colors.amber,
-            child: ListView(
-              children: [
-                ..._mealContainer.storage.map((e) {
-                  return ListTile(
-                    title: Text(
-                        '${e.name} Macros P/F/C ${e.protein}/${e.fat}/${e.carbohydrate}; Cal:${e.calories}'),
-                    trailing: Icon(Icons.pie_chart),
-                  );
-                }).toList(),
-              ],
+          Card(
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  'Time when to use ${_mealContainer.scheduledTime.hour}:${_mealContainer.scheduledTime.minute}',
+                ),
+              ),
             ),
           ),
+          Container(
+            height: 200,
+            child: ListTile(
+              title: Text('MACROS INFO'),
+              trailing: Icon(
+                Icons.pie_chart,
+                size: 150,
+              ),
+            ),
+          ),
+          Center(
+            child: Text('Meals:'),
+          ),
+          ..._mealContainer.storage.map((e) {
+            return Card(
+              child: ListTile(
+                title: Text(
+                    '${e.name} Macros P/F/C ${e.protein}/${e.fat}/${e.carbohydrate}; Cal:${e.calories}'),
+                trailing: Icon(Icons.pie_chart),
+              ),
+            );
+          }).toList(),
         ],
       ),
     );

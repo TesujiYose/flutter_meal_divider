@@ -10,6 +10,7 @@ class MainScreen extends StatelessWidget {
     final containerData = Provider.of<MContainers>(context);
     return Scaffold(
       appBar: AppBar(
+        title: Text('List of Containers'),
         actions: [
           IconButton(
               onPressed: () {
@@ -26,17 +27,29 @@ class MainScreen extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (ctx, i) {
           MealContainer _box = containerData.items[i];
-          return ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ContainerViewScreen(_box.id),
+          return Card(
+            color: _box.color.withOpacity(0.5),
+            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ContainerViewScreen(_box.id),
+                    ),
+                  );
+                },
+                title: Text(_box.name),
+                subtitle: Text('id is ${_box.scheduledTime}'),
+                trailing: Container(
+                  height: 25,
+                  width: 25,
+                  color: _box.color,
                 ),
-              );
-            },
-            title: Text(_box.name),
-            subtitle: Text('id is ${_box.id}'),
+              ),
+            ),
           );
         },
         itemCount: containerData.items.length,

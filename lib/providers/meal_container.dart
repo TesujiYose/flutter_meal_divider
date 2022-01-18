@@ -5,14 +5,16 @@ import './meal.dart';
 class MealContainer {
   String id;
   String name;
-  DateTime scheduledTime;
+  TimeOfDay scheduledTime;
   List<Meal> storage;
+  Color color;
 
   MealContainer({
     required this.id,
     required this.name,
     required this.scheduledTime,
     this.storage = const [],
+    this.color = Colors.white,
   });
 }
 
