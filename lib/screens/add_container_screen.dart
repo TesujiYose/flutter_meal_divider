@@ -11,16 +11,16 @@ class AddContainerScreen extends StatefulWidget {
 }
 
 class _AddContainerScreenState extends State<AddContainerScreen> {
-  final List<Color> _colors = [
-    Colors.white,
-    Colors.green,
-    Colors.red,
-    Colors.amber,
-    Colors.purple,
-    Colors.yellow,
-  ];
+  final Map<String, Color> _colorsMap = {
+    'White': Colors.white,
+    'Green': Colors.green,
+    'Red': Colors.red,
+    'Amber': Colors.amber,
+    'Purple': Colors.purple,
+    'Yellow': Colors.yellow,
+  };
 
-  Color _choosedColor = Colors.white;
+  String _choosedColor = 'White';
 
   TimeOfDay _selectedTime = TimeOfDay(hour: 10, minute: 00);
 
@@ -41,33 +41,56 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
               controller: _nameController,
               decoration: InputDecoration(hintText: 'Name'),
             ),
-            DropdownButton<Color>(
-              value: _choosedColor,
-              onChanged: (newValue) {
-                if (newValue != null) {
-                  print(newValue);
-                  _choosedColor = newValue;
-                }
-                setState(() {});
-              },
-              items: _colors.map<DropdownMenuItem<Color>>((Color e) {
-                return DropdownMenuItem(
-                  child: Text(e.toString()),
-                  value: e,
-                );
-              }).toList(),
+            Row(
+              children: [
+                DropdownButton<String>(
+                  value: _choosedColor,
+                  items:
+                      _colorsMap.keys.map<DropdownMenuItem<String>>((String e) {
+                    return DropdownMenuItem(
+                      child: Text(e.toString()),
+                      value: e,
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      if (newValue != null) {
+                        print(_colorsMap[_choosedColor]);
+                        print('##############');
+                        _choosedColor = newValue;
+                      }
+                    });
+                  },
+                ),
+                Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    color: _colorsMap[_choosedColor],
+                  ),
+                )
+              ],
             ),
-            TextButton(
-                onPressed: () async {
-                  final _pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.now(),
-                    initialEntryMode: TimePickerEntryMode.input,
-                  );
-                  if (_pickedTime != null) _selectedTime = _pickedTime;
-                  // print(selectedTime);
-                },
-                child: Text('Select time')),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () async {
+                    final _pickedTime = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                      initialEntryMode: TimePickerEntryMode.input,
+                    );
+                    setState(() {
+                      if (_pickedTime != null) _selectedTime = _pickedTime;
+                    });
+                    // print(selectedTime);
+                  },
+                  child: Text('Select time'),
+                ),
+                Text('${_selectedTime.hour}:${_selectedTime.minute}')
+              ],
+            ),
             TextButton(
               onPressed: () {
                 containerData.addContainer(
@@ -76,7 +99,7 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
                     name: _nameController.text,
                     scheduledTime: _selectedTime,
                     storage: [],
-                    color: _choosedColor,
+                    color: _colorsMap[_choosedColor]!,
                   ),
                 );
                 Navigator.pop(context);
