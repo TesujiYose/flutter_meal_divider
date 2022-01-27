@@ -48,7 +48,19 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
                   items:
                       _colorsMap.keys.map<DropdownMenuItem<String>>((String e) {
                     return DropdownMenuItem(
-                      child: Text(e.toString()),
+                      child: Row(
+                        children: [
+                          Text(e.toString()),
+                          Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                              color: _colorsMap[e],
+                              border: Border.all(width: 1),
+                            ),
+                          )
+                        ],
+                      ),
                       value: e,
                     );
                   }).toList(),
