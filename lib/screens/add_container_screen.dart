@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_meal_divider/providers/app_box.dart';
 
 import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
   @override
   build(BuildContext context) {
     //var boxContainer = await Hive.openBox('containerBox');
-    Box<String> _containerBox = Hive.box<String>('containerBox');
+    AppBox _appBox = AppBox();
     final containerData = Provider.of<MContainers>(context);
     return Scaffold(
       appBar: AppBar(
@@ -107,10 +108,11 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
             ),
             TextButton(
               onPressed: () {
-                _containerBox.put('name', _nameController.text);
+                final String containerId = DateTime.now().toString();
+                _appBox.addId(containerId);
                 containerData.addContainer(
                   MealContainer(
-                    id: DateTime.now().toString(),
+                    id: containerId,
                     name: _nameController.text,
                     scheduledTime: _selectedTime,
                     storage: [],

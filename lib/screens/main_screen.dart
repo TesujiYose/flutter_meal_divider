@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_meal_divider/providers/app_box.dart';
 import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:flutter_meal_divider/screens/add_container_screen.dart';
 import 'package:flutter_meal_divider/screens/container_view_screen.dart';
@@ -11,17 +12,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  Box<String>? _containerBox;
-
   @override
   void initState() {
     super.initState();
-    _containerBox = Hive.box<String>('containerBox');
   }
 
   @override
   build(BuildContext context) {
     final containerData = Provider.of<MContainers>(context);
+    AppBox _containerBox = AppBox();
     //var _boxContainer = await Hive.openBox('containerBox');
     return Scaffold(
       appBar: AppBar(
@@ -41,8 +40,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: ListView.builder(
         itemBuilder: (ctx, i) {
-          print('@@@@@@@@@@@@@');
-          print(_containerBox?.get('name', defaultValue: 'Name'));
           MealContainer _box = containerData.items[i];
           return Card(
             color: _box.color.withOpacity(0.5),
@@ -70,6 +67,11 @@ class _MainScreenState extends State<MainScreen> {
           );
         },
         itemCount: containerData.items.length,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _containerBox.getIds();
+        },
       ),
     );
   }

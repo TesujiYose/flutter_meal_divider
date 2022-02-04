@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import './meal.dart';
 
+part 'meal_container.g.dart';
+
+@HiveType(typeId: 1)
 class MealContainer {
+  @HiveField(0)
   String id;
+  @HiveField(1)
   String name;
+  @HiveField(2)
   TimeOfDay scheduledTime;
+  @HiveField(3)
   List<Meal> storage;
+  @HiveField(4)
   Color color;
 
   MealContainer({
