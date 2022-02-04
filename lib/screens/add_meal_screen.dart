@@ -16,7 +16,9 @@ class AddMealScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final containerData = Provider.of<MContainers>(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Add meal'),
+      ),
       body: Column(
         children: [
           TextFormField(

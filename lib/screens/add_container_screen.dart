@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:provider/provider.dart';
 
+import 'package:hive/hive.dart';
+
 class AddContainerScreen extends StatefulWidget {
   AddContainerScreen({Key? key}) : super(key: key);
 
@@ -27,7 +29,9 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
   TextEditingController _nameController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  build(BuildContext context) {
+    //var boxContainer = await Hive.openBox('containerBox');
+    Box<String> _containerBox = Hive.box<String>('containerBox');
     final containerData = Provider.of<MContainers>(context);
     return Scaffold(
       appBar: AppBar(
@@ -67,8 +71,6 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
                   onChanged: (newValue) {
                     setState(() {
                       if (newValue != null) {
-                        print(_colorsMap[_choosedColor]);
-                        print('##############');
                         _choosedColor = newValue;
                       }
                     });
@@ -105,6 +107,7 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
             ),
             TextButton(
               onPressed: () {
+                _containerBox.put('name', _nameController.text);
                 containerData.addContainer(
                   MealContainer(
                     id: DateTime.now().toString(),

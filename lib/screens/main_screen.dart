@@ -3,11 +3,26 @@ import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:flutter_meal_divider/screens/add_container_screen.dart';
 import 'package:flutter_meal_divider/screens/container_view_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:hive/hive.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  Box<String>? _containerBox;
+
+  @override
+  void initState() {
+    super.initState();
+    _containerBox = Hive.box<String>('containerBox');
+  }
+
+  @override
+  build(BuildContext context) {
     final containerData = Provider.of<MContainers>(context);
+    //var _boxContainer = await Hive.openBox('containerBox');
     return Scaffold(
       appBar: AppBar(
         title: Text('List of Containers'),
@@ -26,6 +41,8 @@ class MainScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (ctx, i) {
+          print('@@@@@@@@@@@@@');
+          print(_containerBox?.get('name', defaultValue: 'Name'));
           MealContainer _box = containerData.items[i];
           return Card(
             color: _box.color.withOpacity(0.5),
