@@ -48,6 +48,16 @@ class MealBox with ChangeNotifier {
     log(box.toMap().toString());
   }
 
+  void deleteMeal(String containerId, String mealId) {
+    var box = Hive.box(_boxName);
+    MealContainer _cont = findById(containerId);
+    var _storage = _cont.storage.removeWhere((element) => element.id == mealId);
+    box.put(
+      _cont.id,
+      _cont,
+    );
+  }
+
   void resetAllContent() {
     var box = Hive.box(_boxName);
     for (String key in box.keys) {

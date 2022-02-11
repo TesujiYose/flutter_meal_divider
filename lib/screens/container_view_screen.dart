@@ -5,6 +5,7 @@ import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:flutter_meal_divider/providers/summary.dart';
 import 'package:flutter_meal_divider/screens/add_meal_screen.dart';
 import 'package:flutter_meal_divider/screens/edit_container_screen.dart';
+import 'package:flutter_meal_divider/screens/meal_view_screen.dart';
 import 'package:flutter_meal_divider/widgets/legend_row.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
@@ -181,8 +182,16 @@ class ContainerViewScreen extends StatelessWidget {
             ..._mealContainer.storage.map((e) {
               return Card(
                 child: ListTile(
-                  title: Text(
-                      '${e.name} P/F/C ${e.protein}/${e.fat}/${e.carbohydrate}; Cal:${e.calories}'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MealViewScreen(
+                            e, _mealContainer.id, _mealContainer.color),
+                      ),
+                    );
+                  },
+                  title: Text('${e.name}'),
                   trailing: Container(
                     width: 80,
                     child: PieChart(

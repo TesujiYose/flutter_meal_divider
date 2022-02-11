@@ -82,6 +82,11 @@ class MContainers with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteMeal(String containerId, String mealId) {
+    _mealBox.deleteMeal(containerId, mealId);
+    notifyListeners();
+  }
+
   Summary getContainerSummary(String id) {
     List<double> _sum = [0, 0, 0, 0, 0];
 
