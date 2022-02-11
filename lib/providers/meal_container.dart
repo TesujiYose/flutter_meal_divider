@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_meal_divider/providers/meal_box.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
 import './meal.dart';
 
@@ -12,7 +14,7 @@ class MealContainer {
   @HiveField(1)
   String name;
   @HiveField(2)
-  TimeOfDay scheduledTime;
+  DateTime scheduledTime;
   @HiveField(3)
   List<Meal> storage;
   @HiveField(4)
@@ -29,22 +31,25 @@ class MealContainer {
 
 class MContainers with ChangeNotifier {
   List<MealContainer> _items = [];
+  MealBox _mealBox = MealBox();
 
   List<MealContainer> get items {
-    return [..._items];
+    return _mealBox.getItems();
   }
 
   MealContainer findById(String id) {
-    return _items.firstWhere((element) => element.id == id);
+    return _mealBox.findById(id);
   }
 
   void addContainer(MealContainer cnt) {
     _items.add(cnt);
+    _mealBox.addContainer(cnt);
     notifyListeners();
   }
 
   void removeContainer(String id) {
     _items.removeWhere((element) => element.id == id);
+    _mealBox.removeContainer(id);
   }
 
   void addProductToContainer(String id, Meal meal) {

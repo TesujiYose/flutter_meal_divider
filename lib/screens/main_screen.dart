@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meal_divider/providers/app_box.dart';
+import 'package:flutter_meal_divider/providers/meal_box.dart';
 import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:flutter_meal_divider/screens/add_container_screen.dart';
 import 'package:flutter_meal_divider/screens/container_view_screen.dart';
@@ -20,8 +20,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   build(BuildContext context) {
     final containerData = Provider.of<MContainers>(context);
-    AppBox _containerBox = AppBox();
-    //var _boxContainer = await Hive.openBox('containerBox');
+    MealBox _containerBox = MealBox();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('List of Containers'),
@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _containerBox.getIds();
+          //_containerBox;
         },
       ),
     );

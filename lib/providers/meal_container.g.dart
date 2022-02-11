@@ -19,7 +19,7 @@ class MealContainerAdapter extends TypeAdapter<MealContainer> {
     return MealContainer(
       id: fields[0] as String,
       name: fields[1] as String,
-      scheduledTime: fields[2] as TimeOfDay,
+      scheduledTime: fields[2] as DateTime,
       storage: (fields[3] as List).cast<Meal>(),
       color: fields[4] as Color,
     );

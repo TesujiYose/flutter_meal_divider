@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meal_divider/providers/app_box.dart';
+import 'package:flutter_meal_divider/providers/meal_box.dart';
 
 import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:provider/provider.dart';
@@ -31,8 +31,6 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
 
   @override
   build(BuildContext context) {
-    //var boxContainer = await Hive.openBox('containerBox');
-    AppBox _appBox = AppBox();
     final containerData = Provider.of<MContainers>(context);
     return Scaffold(
       appBar: AppBar(
@@ -109,16 +107,18 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
             TextButton(
               onPressed: () {
                 final String containerId = DateTime.now().toString();
-                _appBox.addId(containerId);
-                containerData.addContainer(
-                  MealContainer(
-                    id: containerId,
-                    name: _nameController.text,
-                    scheduledTime: _selectedTime,
-                    storage: [],
-                    color: _colorsMap[_choosedColor]!,
-                  ),
+                final now = DateTime.now();
+                var _mealContainer = MealContainer(
+                  id: containerId,
+                  name: _nameController.text,
+                  scheduledTime: DateTime(now.year, now.month, now.day,
+                      _selectedTime.hour, _selectedTime.minute),
+                  storage: [],
+                  color: _colorsMap[_choosedColor]!,
                 );
+
+                containerData.addContainer(_mealContainer);
+
                 Navigator.pop(context);
               },
               child: Text('Submit!'),
