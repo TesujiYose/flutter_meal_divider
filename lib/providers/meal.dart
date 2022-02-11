@@ -17,7 +17,7 @@ class Meal {
   @HiveField(5)
   final double weight;
   @HiveField(6)
-  final int calories;
+  final double calories;
 
   Meal({
     required this.id,
@@ -28,4 +28,12 @@ class Meal {
     required this.weight,
     required this.calories,
   });
+
+  Map<String, double> toMap() {
+    return {
+      'Carbohydrate': carbohydrate,
+      'Protein': protein,
+      'Fat': fat,
+    };
+  }
 }

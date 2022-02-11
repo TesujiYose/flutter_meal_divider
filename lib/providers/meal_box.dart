@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_meal_divider/providers/meal.dart';
 
 import 'package:hive/hive.dart';
 
@@ -11,7 +12,8 @@ class MealBox with ChangeNotifier {
 
   initBox() async {
     await Hive.openBox(_boxName);
-    log('$_boxName opened with ${_boxName.length} entries');
+
+    log('$_boxName opened with ${Hive.box(_boxName).keys.length} entries');
   }
 
   void addContainer(MealContainer cnt) {
@@ -33,5 +35,33 @@ class MealBox with ChangeNotifier {
 
   MealContainer findById(String id) {
     return Hive.box(_boxName).get(id);
+  }
+
+  void addProductToContainer(String id, Meal meal) {
+    MealContainer _cont = findById(id);
+    _cont.storage.add(meal);
+    addContainer(_cont);
+  }
+
+  void getInfo() {
+    var box = Hive.box(_boxName);
+    log(box.toMap().toString());
+  }
+
+  void resetAllContent() {
+    var box = Hive.box(_boxName);
+    for (String key in box.keys) {
+      var _mc = findById(key);
+      box.put(
+        key,
+        MealContainer(
+          id: _mc.id,
+          name: _mc.name,
+          scheduledTime: _mc.scheduledTime,
+          storage: [],
+          color: _mc.color,
+        ),
+      );
+    }
   }
 }

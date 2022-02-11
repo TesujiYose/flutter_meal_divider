@@ -19,50 +19,60 @@ class AddMealScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Add meal'),
       ),
-      body: Column(
-        children: [
-          TextFormField(
-            controller: _nameController,
-            decoration: InputDecoration(hintText: 'Name'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(hintText: 'Name'),
+              ),
+              TextFormField(
+                controller: _carbohydratesController,
+                decoration: InputDecoration(hintText: 'Carbs'),
+                keyboardType: TextInputType.number,
+              ),
+              TextFormField(
+                controller: _proteinController,
+                decoration: InputDecoration(hintText: 'Protein'),
+                keyboardType: TextInputType.number,
+              ),
+              TextFormField(
+                controller: _fatController,
+                decoration: InputDecoration(hintText: 'Fat'),
+                keyboardType: TextInputType.number,
+              ),
+              TextFormField(
+                controller: _weightController,
+                decoration: InputDecoration(hintText: 'Weight'),
+                keyboardType: TextInputType.number,
+              ),
+              TextFormField(
+                controller: _caloriesController,
+                decoration: InputDecoration(hintText: 'Calories'),
+                keyboardType: TextInputType.number,
+              ),
+              TextButton(
+                  onPressed: () {
+                    containerData.addProductToContainer(
+                      id,
+                      Meal(
+                          id: DateTime.now().toString(),
+                          name: _nameController.text,
+                          carbohydrate:
+                              double.tryParse(_carbohydratesController.text)!,
+                          protein: double.tryParse(_proteinController.text)!,
+                          fat: double.tryParse(_fatController.text)!,
+                          weight: double.tryParse(_weightController.text)!,
+                          calories: double.tryParse(_caloriesController.text)!),
+                    );
+                    Navigator.pop(context);
+                  },
+                  child: Text('Submit!'))
+            ],
           ),
-          TextFormField(
-            controller: _carbohydratesController,
-            decoration: InputDecoration(hintText: 'Carbs'),
-          ),
-          TextFormField(
-            controller: _proteinController,
-            decoration: InputDecoration(hintText: 'Protein'),
-          ),
-          TextFormField(
-            controller: _fatController,
-            decoration: InputDecoration(hintText: 'Fat'),
-          ),
-          TextFormField(
-            controller: _weightController,
-            decoration: InputDecoration(hintText: 'Weight'),
-          ),
-          TextFormField(
-            controller: _caloriesController,
-            decoration: InputDecoration(hintText: 'calories'),
-          ),
-          TextButton(
-              onPressed: () {
-                containerData.addProductToContainer(
-                  id,
-                  Meal(
-                      id: DateTime.now().toString(),
-                      name: _nameController.text,
-                      carbohydrate:
-                          double.tryParse(_carbohydratesController.text)!,
-                      protein: double.tryParse(_proteinController.text)!,
-                      fat: double.tryParse(_fatController.text)!,
-                      weight: double.tryParse(_weightController.text)!,
-                      calories: int.tryParse(_caloriesController.text)!),
-                );
-                Navigator.pop(context);
-              },
-              child: Text('Submit!'))
-        ],
+        ),
       ),
     );
   }

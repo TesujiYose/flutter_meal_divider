@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.error != null) {
                 print(snapshot.error);
-                return ErrorScreen();
+                return const ErrorScreen();
               } else {
                 return MainScreen();
               }

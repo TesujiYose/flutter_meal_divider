@@ -23,7 +23,7 @@ class MealAdapter extends TypeAdapter<Meal> {
       protein: fields[3] as double,
       fat: fields[4] as double,
       weight: fields[5] as double,
-      calories: fields[6] as int,
+      calories: fields[6] as double,
     );
   }
 
