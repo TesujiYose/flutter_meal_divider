@@ -15,7 +15,7 @@ class AddContainerScreen extends StatefulWidget {
 
 class _AddContainerScreenState extends State<AddContainerScreen> {
   final Map<String, Color> _colorsMap = {
-    'White': Colors.white,
+    'Blue': Colors.blue,
     'Green': Colors.green,
     'Red': Colors.red,
     'Amber': Colors.amber,
@@ -23,7 +23,7 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
     'Yellow': Colors.yellow,
   };
 
-  String _choosedColor = 'White';
+  String _choosedColor = 'Blue';
 
   TimeOfDay _selectedTime = TimeOfDay(hour: 10, minute: 00);
 
@@ -40,11 +40,9 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(hintText: 'Name'),
-            ),
+            NameFormField(nameController: _nameController),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 DropdownButton<String>(
                   value: _choosedColor,
@@ -52,6 +50,7 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
                       _colorsMap.keys.map<DropdownMenuItem<String>>((String e) {
                     return DropdownMenuItem(
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(e.toString()),
                           Container(
@@ -61,7 +60,7 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
                               color: _colorsMap[e],
                               border: Border.all(width: 1),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       value: e,
@@ -101,7 +100,9 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
                   },
                   child: Text('Select time'),
                 ),
-                Text('${_selectedTime.hour}:${_selectedTime.minute}')
+                Text(MaterialLocalizations.of(context).formatTimeOfDay(
+                    _selectedTime,
+                    alwaysUse24HourFormat: true))
               ],
             ),
             TextButton(
@@ -125,6 +126,26 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class NameFormField extends StatelessWidget {
+  const NameFormField({
+    Key? key,
+    required TextEditingController nameController,
+  })  : _nameController = nameController,
+        super(key: key);
+
+  final TextEditingController _nameController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: TextFormField(
+        controller: _nameController,
+        decoration: InputDecoration(hintText: 'Name'),
       ),
     );
   }
