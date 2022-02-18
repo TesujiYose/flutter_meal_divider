@@ -9,6 +9,7 @@ class EditContainerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final containerData = Provider.of<MContainers>(context);
+    MealContainer _mealContainer = containerData.findById(id);
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
@@ -43,6 +44,15 @@ class EditContainerScreen extends StatelessWidget {
         },
         child: Icon(Icons.delete),
         backgroundColor: Colors.red,
+      ),
+      body: Column(
+        children: [
+          Text(_mealContainer.id),
+          Text(_mealContainer.name),
+          Text(_mealContainer.color.toString()),
+          Text(_mealContainer.scheduledTime.toString()),
+          ..._mealContainer.storage.map((e) => Text(e.name)),
+        ],
       ),
     );
   }

@@ -9,6 +9,7 @@ import 'package:flutter_meal_divider/screens/meal_view_screen.dart';
 import 'package:flutter_meal_divider/widgets/legend_row.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ContainerViewScreen extends StatelessWidget {
   String _id;
@@ -19,9 +20,9 @@ class ContainerViewScreen extends StatelessWidget {
     Colors.red,
     Colors.green
   ];
-
   @override
   Widget build(BuildContext context) {
+    final localization = MaterialLocalizations.of(context);
     final containerData = Provider.of<MContainers>(context);
     MealContainer _mealContainer = containerData.findById(_id);
     Summary _containerSummary = containerData.getContainerSummary(_id);
@@ -62,7 +63,7 @@ class ContainerViewScreen extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(10),
                 child: Text(
-                  'Time when to use ${_mealContainer.scheduledTime.hour}:${_mealContainer.scheduledTime.minute}',
+                  'Time when to use ${DateFormat('kk:mm').format(_mealContainer.scheduledTime)}',
                 ),
               ),
             ),
