@@ -40,6 +40,7 @@ class _AddContainerScreenState extends State<AddContainerScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            Text('You Should provide all information!'),
             NameFormField(nameController: _nameController),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
