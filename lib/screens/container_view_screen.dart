@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_meal_divider/providers/meal.dart';
 import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:flutter_meal_divider/providers/summary.dart';
 import 'package:flutter_meal_divider/screens/add_meal_screen.dart';
@@ -40,7 +39,7 @@ class ContainerViewScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
           ),
           IconButton(
             onPressed: () {
@@ -51,7 +50,7 @@ class ContainerViewScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -60,7 +59,7 @@ class ContainerViewScreen extends StatelessWidget {
           Card(
             child: Center(
               child: Container(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: Text(
                   'Time when to use ${_mealContainer.scheduledTime.hour}:${_mealContainer.scheduledTime.minute}',
                 ),
