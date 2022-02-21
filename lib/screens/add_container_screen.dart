@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meal_divider/providers/meal_box.dart';
-
 import 'package:flutter_meal_divider/providers/meal_container.dart';
 import 'package:provider/provider.dart';
-
-import 'package:hive/hive.dart';
 
 class AddContainerScreen extends StatefulWidget {
   AddContainerScreen({Key? key}) : super(key: key);
